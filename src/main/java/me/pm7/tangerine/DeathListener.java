@@ -1,5 +1,6 @@
 package me.pm7.tangerine;
 
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;

@@ -1,5 +1,6 @@
 package me.pm7.tangerine;
 
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.*;
@@ -20,7 +21,6 @@ import java.util.UUID;
 
 public class HitListener implements Listener {
     public static HashMap<UUID, Integer> scores = new HashMap<>();
-    public static boolean enabled = true;
 
     @EventHandler
     public void onPlayerHit(ProjectileHitEvent e) {
@@ -34,14 +34,21 @@ public class HitListener implements Listener {
 
         CustomModelDataComponent cmdc = meta.getCustomModelDataComponent();
         if(cmdc == null || !cmdc.getStrings().contains("tangerine")) return;
-
         if(!(e.getHitEntity() instanceof Player hit)) {return;}
 
         ProjectileSource ps = p.getShooter();
         if(!(ps instanceof Player shooter)) return;
 
+        // get a custom color if there is one
+        String color = "#FE9309";
+        if(!meta.getLore().isEmpty()) {
+            color = meta.getLore().getLast();
+        }
+
         // Orange-ify the screen of the hit player
-        if(enabled) hit.sendTitle("\uE000", "", 0, 5, 10);
+        TextComponent tc = new TextComponent();
+        tc.setText(net.md_5.bungee.api.ChatColor.of(color) + "\uE000");
+        hit.sendTitle(tc.getText(), null, 0, 5, 10);
 
         // add score to shooter
         UUID shooterUUID = shooter.getUniqueId();
