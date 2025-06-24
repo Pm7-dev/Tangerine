@@ -1,5 +1,6 @@
 package me.pm7.tangerine;
 
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Tangerine extends JavaPlugin {
@@ -10,12 +11,15 @@ public final class Tangerine extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        getServer().getPluginManager().registerEvents(new HitListener(), this); //tangerine
-        ScoreMarker.startloop();
-    }
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
 
-    @Override
-    public void onDisable() {
+        PluginManager pm7 = getServer().getPluginManager();
+
+        pm7.registerEvents(new HitListener(), this); //tangerine
+        pm7.registerEvents(new DeathListener(), this); //tangerine
+
+        ScoreMarker.startloop();
     }
 
     public static Tangerine getPlugin() {return plugin;}

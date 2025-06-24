@@ -1,0 +1,14 @@
+{
+    "splat": {
+        "category": "record",
+        "sounds": [
+            "tangerine:splat"
+        ]
+    },
+    "hit": {
+        "category": "record",
+        "sounds": [
+            "tangerine:hit"
+        ]
+    }
+}

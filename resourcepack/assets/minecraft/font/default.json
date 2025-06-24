@@ -1,0 +1,11 @@
+{
+    "providers": [
+        {
+            "type": "bitmap",
+            "file": "tangerine:tangerine_splat.png",
+            "ascent": 512,
+            "height": 1024,
+            "chars": ["\uE000"]
+        }
+    ]
+}
