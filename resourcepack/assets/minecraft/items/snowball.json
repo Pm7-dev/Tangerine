@@ -1,19 +1,25 @@
 {
-    "model": {
-      "type": "select",
-      "property": "custom_model_data",
-      "fallback": {
-        "type": "model",
-        "model": "item/snowball"
-      },
-      "cases": [
-        {
-          "when": "tangerine",
-          "model": {
-            "type": "model",
-            "model": "tangerine:item/tangerine"
-          }
+  "model": {
+    "type": "select",
+    "property": "custom_model_data",
+    "fallback": {
+      "type": "model",
+      "model": "item/snowball"
+    },
+    "cases": [
+      {
+        "when": "tangerine",
+        "model": {
+          "type": "model",
+          "model": "tangerine:item/tangerine",
+          "tints": [
+            {
+              "type": "minecraft:potion",
+              "default": 16750620
+            }
+          ]
         }
-      ]
-    }
+      }
+    ]
   }
+}

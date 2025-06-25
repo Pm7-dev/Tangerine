@@ -1,8 +1,8 @@
-package me.pm7.tangerine;
+package me.pm7.tangerine.listener;
 
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -109,7 +109,7 @@ public class DeathListener implements Listener {
         cmdp.setStrings(Collections.singletonList("tangerine"));
         meta.setItemName("Tangerine");
         meta.setRarity(ItemRarity.UNCOMMON);
-        meta.setMaxStackSize(11);
+        meta.setMaxStackSize(64);
         meta.setCustomModelDataComponent(cmdp);
         tangerine.setItemMeta(meta);
     }
@@ -117,6 +117,8 @@ public class DeathListener implements Listener {
     @EventHandler
     public void onEntityDie(EntityDeathEvent e ) {
         if(!entities.contains(e.getEntityType())) return;
+
+        if(!(e.getDamageSource() instanceof Player)) return;
 
         ItemStack yay = tangerine.clone();
         yay.setAmount(random.nextInt(1, 6));

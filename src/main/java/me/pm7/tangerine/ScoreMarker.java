@@ -78,7 +78,7 @@ public class ScoreMarker {
 
     }
 
-    private void kill() {
+    public void kill() {
         markers.remove(this);
         display.remove();
     }
@@ -86,5 +86,9 @@ public class ScoreMarker {
     private double getChange(int ticks) {
         if(ticks==0) return 0;
         return (Math.pow(ticks, 0.33) - Math.pow(ticks-1, 0.33))/2;
+    }
+
+    public static List<ScoreMarker> getMarkers() {
+        return markers;
     }
 }

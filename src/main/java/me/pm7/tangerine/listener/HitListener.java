@@ -1,5 +1,7 @@
-package me.pm7.tangerine;
+package me.pm7.tangerine.listener;
 
+import me.pm7.tangerine.ScoreMarker;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.SoundCategory;
@@ -17,6 +19,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class HitListener implements Listener {
@@ -41,13 +44,23 @@ public class HitListener implements Listener {
 
         // get a custom color if there is one
         String color = "#FE9309";
-        if(!meta.getLore().isEmpty()) {
-            color = meta.getLore().getLast();
+        List<String> lore = meta.getLore();
+        if(lore != null) {
+            String potentialColor = lore.getLast();
+            potentialColor = potentialColor.substring(potentialColor.length() - 7);
+            if(potentialColor.startsWith("#")) color = potentialColor;
+        }
+
+        ChatColor finalColor;
+        try {
+            finalColor = ChatColor.of(color);
+        } catch (IllegalArgumentException exception) {
+            finalColor = ChatColor.of("#FE9309");
         }
 
         // Orange-ify the screen of the hit player
         TextComponent tc = new TextComponent();
-        tc.setText(net.md_5.bungee.api.ChatColor.of(color) + "\uE000");
+        tc.setText(finalColor + "\uE000");
         hit.sendTitle(tc.getText(), null, 0, 5, 10);
 
         // add score to shooter

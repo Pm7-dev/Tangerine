@@ -1,5 +1,9 @@
 package me.pm7.tangerine;
 
+import me.pm7.tangerine.listener.DeathListener;
+import me.pm7.tangerine.listener.HitListener;
+import me.pm7.tangerine.listener.JoinListener;
+import me.pm7.tangerine.listener.RenameListener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,8 +22,17 @@ public final class Tangerine extends JavaPlugin {
 
         pm7.registerEvents(new HitListener(), this); //tangerine
         pm7.registerEvents(new DeathListener(), this); //tangerine
+        pm7.registerEvents(new RenameListener(), this); //tangerine
+        pm7.registerEvents(new JoinListener(), this); //tangerine
 
         ScoreMarker.startloop();
+    }
+
+    @Override
+    public void onDisable() {
+        for(ScoreMarker sm : ScoreMarker.getMarkers()) {
+            sm.kill();
+        }
     }
 
     public static Tangerine getPlugin() {return plugin;}

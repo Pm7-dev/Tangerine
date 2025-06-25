@@ -1,6 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-      "layer0": "tangerine:item/tangerine"
+      "layer0": "tangerine:item/tangerine",
+      "layer1": "tangerine:item/tangerine_overlay"
     }
-  }
+}
