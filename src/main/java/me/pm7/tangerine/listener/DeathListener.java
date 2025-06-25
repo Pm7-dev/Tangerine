@@ -118,7 +118,7 @@ public class DeathListener implements Listener {
     public void onEntityDie(EntityDeathEvent e ) {
         if(!entities.contains(e.getEntityType())) return;
 
-        if(!(e.getDamageSource() instanceof Player)) return;
+        if(!(e.getDamageSource().getCausingEntity() instanceof Player)) return;
 
         ItemStack yay = tangerine.clone();
         yay.setAmount(random.nextInt(1, 6));
