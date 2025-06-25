@@ -9,6 +9,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public final class Tangerine extends JavaPlugin {
 
     private static Tangerine plugin;
@@ -21,6 +26,13 @@ public final class Tangerine extends JavaPlugin {
         saveDefaultConfig();
         saveConfig();
 
+        // load leaderboard from config
+        scores = new ArrayList<>();
+        ConfigurationSection scoreSection = getScoreSection();
+        for(String key : scoreSection.getKeys(true)) {
+            scores.add(new AbstractMap.SimpleEntry<>(key, scoreSection.getLong(key)));
+        }
+
         PluginManager pm7 = getServer().getPluginManager();
 
         pm7.registerEvents(new HitListener(), this); //tangerine
@@ -32,28 +44,32 @@ public final class Tangerine extends JavaPlugin {
 
         if(getConfig().getBoolean("scoreTracker")) {
             ScoreMarker.startloop();
-            Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::autosave, 0L, 1200L);
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::autosave, 1200L, 1200L);
         }
 
     }
 
     @Override
     public void onDisable() {
-        for(ScoreMarker sm : ScoreMarker.getMarkers()) {
-            sm.kill();
-        }
-
         if(getConfig().getBoolean("scoreTracker")) {
+            for(ScoreMarker sm : ScoreMarker.getMarkers()) {
+                sm.kill();
+            }
             autosave();
         }
     }
 
-    // this was going to do more at some point I think :/
     private void autosave() {
+        ConfigurationSection section = getScoreSection();
+        for(Map.Entry<String, Long> entry : scores) {
+            section.set(entry.getKey(), entry.getValue());
+        }
         saveConfig();
     }
 
-    public ConfigurationSection getScores() {
+    private static List<Map.Entry<String, Long>> scores;
+    public List<Map.Entry<String, Long>> getScores() {return scores;}
+    public ConfigurationSection getScoreSection() {
         return getConfig().createSection("tangerinePoints");
     }
 

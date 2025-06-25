@@ -18,10 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class HitListener implements Listener {
     private static final Tangerine plugin = Tangerine.getPlugin();
@@ -68,10 +65,21 @@ public class HitListener implements Listener {
         if(plugin.getConfig().getBoolean("scoreTracker")) {
 
             // add score to shooter
-            UUID shooterUUID = shooter.getUniqueId();
-            long currentPoints = plugin.getScores().getLong(shooterUUID.toString());
-            plugin.getScores().set(shooterUUID.toString(), currentPoints + 1);
-            plugin.saveConfig();
+            long score = 0;
+            int index = -1;
+            for(Map.Entry<String, Long> entry : plugin.getScores()) {
+                if(entry.getKey().equals(shooter.getUniqueId().toString())) {
+                    score = entry.getValue();
+                    index = plugin.getScores().indexOf(entry);
+                    break;
+                }
+            }
+
+            if(index >= 0) {
+                plugin.getScores().set(index, new AbstractMap.SimpleEntry<>(shooter.getUniqueId().toString(), score + 1));
+            } else {
+                plugin.getScores().add(new AbstractMap.SimpleEntry<>(shooter.getUniqueId().toString(), 1L));
+            }
 
             // score "+1" thingy animation
             new ScoreMarker(shooter, hit.getLocation());

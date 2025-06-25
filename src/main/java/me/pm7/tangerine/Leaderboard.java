@@ -1,10 +1,8 @@
 package me.pm7.tangerine;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.ComponentBuilder;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -55,7 +53,7 @@ public class Leaderboard implements CommandExecutor {
                     if(scores.size() >= 8) {
                         appendScore(builder, 7, scores);
                     }
-                } else {
+                } else if(index > 6) {
                     builder.append(Component.newline())
                            .append(Component.text("...").color(NamedTextColor.GRAY));
 
@@ -86,19 +84,13 @@ public class Leaderboard implements CommandExecutor {
 
     private List<Map.Entry<String, Long>> organize() {
 
-        // Load from config
-        HashMap<String, Long> values = new HashMap<>();
-        for(String s : plugin.getScores().getKeys(true)) {
-            UUID uuid = UUID.fromString(s);
-            OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            values.put(p.getName(), plugin.getScores().getLong(s));
+        List<Map.Entry<String, Long>> list = new ArrayList<>();
+
+        for(Map.Entry<String, Long> entry : plugin.getScores()) {
+            String name = Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName();
+            list.add(new AbstractMap.SimpleEntry<>(name, entry.getValue()));
         }
 
-        // Create a list from elements of HashMap
-        List<Map.Entry<String, Long> > list =
-                new LinkedList<>(values.entrySet());
-
-        // Sort the list
         list.sort(Map.Entry.comparingByValue());
 
         return list;
