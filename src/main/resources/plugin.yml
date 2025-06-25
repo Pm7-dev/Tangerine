@@ -2,3 +2,12 @@ name: Tangerine
 version: '1.0'
 main: me.pm7.tangerine.Tangerine
 api-version: '1.21'
+commands:
+  tangerineleaderboard:
+    description: "view the tangerine leaderboard"
+    aliases:
+      - "tleader"
+      - "tleaderboard"
+      - "tangerinepoints"
+      - "tpoints"
+    usage: /<command>

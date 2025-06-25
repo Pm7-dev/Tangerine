@@ -25,7 +25,6 @@ import java.util.UUID;
 
 public class HitListener implements Listener {
     private static final Tangerine plugin = Tangerine.getPlugin();
-    public static HashMap<UUID, Integer> scores = new HashMap<>();
 
     @EventHandler
     public void onPlayerHit(ProjectileHitEvent e) {
@@ -67,8 +66,8 @@ public class HitListener implements Listener {
 
         // add score to shooter
         UUID shooterUUID = shooter.getUniqueId();
-        if(scores.containsKey(shooterUUID)) scores.put(shooterUUID, scores.get(shooterUUID) + 1);
-        else scores.put(shooterUUID, 1);
+        long currentPoints = plugin.getScores().getLong(shooterUUID.toString());
+        plugin.getScores().set(shooterUUID.toString(), currentPoints + 1);
 
         // sounds
         hit.playSound(hit.getLocation(), "tangerine:splat", SoundCategory.RECORDS, 1, 1);
