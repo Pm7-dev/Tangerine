@@ -1,6 +1,7 @@
 package me.pm7.tangerine.listener;
 
 import me.pm7.tangerine.ScoreMarker;
+import me.pm7.tangerine.Tangerine;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class HitListener implements Listener {
+    private static final Tangerine plugin = Tangerine.getPlugin();
     public static HashMap<UUID, Integer> scores = new HashMap<>();
 
     @EventHandler
@@ -80,7 +82,7 @@ public class HitListener implements Listener {
     public void onThrow(ProjectileLaunchEvent e) {
         if(e.getEntity().getType() == EntityType.SNOWBALL) {
             if(e.getEntity().getShooter() instanceof Player p) {
-                p.setCooldown(Material.SNOWBALL, 20);
+                p.setCooldown(Material.SNOWBALL, plugin.getConfig().getInt("throwCooldownTicks"));
             }
         }
     }

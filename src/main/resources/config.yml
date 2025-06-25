@@ -1,1 +1,2 @@
 automaticallyApplyResourcePack: true
+throwCooldownTicks: 10
