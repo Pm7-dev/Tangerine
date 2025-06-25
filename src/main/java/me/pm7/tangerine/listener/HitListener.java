@@ -64,17 +64,21 @@ public class HitListener implements Listener {
         tc.setText(finalColor + "\uE000");
         hit.sendTitle(tc.getText(), null, 0, 5, 10);
 
-        // add score to shooter
-        UUID shooterUUID = shooter.getUniqueId();
-        long currentPoints = plugin.getScores().getLong(shooterUUID.toString());
-        plugin.getScores().set(shooterUUID.toString(), currentPoints + 1);
+        // Score tracker & score animation stuff
+        if(plugin.getConfig().getBoolean("scoreTracker")) {
+
+            // add score to shooter
+            UUID shooterUUID = shooter.getUniqueId();
+            long currentPoints = plugin.getScores().getLong(shooterUUID.toString());
+            plugin.getScores().set(shooterUUID.toString(), currentPoints + 1);
+
+            // score "+1" thingy animation
+            new ScoreMarker(shooter, hit.getLocation());
+        }
 
         // sounds
         hit.playSound(hit.getLocation(), "tangerine:splat", SoundCategory.RECORDS, 1, 1);
         shooter.playSound(shooter.getLocation(), "tangerine:hit", SoundCategory.RECORDS, 1, 1);
-
-        // score "+1" thingy animation
-        new ScoreMarker(shooter, hit.getLocation());
     }
 
     @EventHandler

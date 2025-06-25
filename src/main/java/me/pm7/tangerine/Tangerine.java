@@ -28,9 +28,11 @@ public final class Tangerine extends JavaPlugin {
         pm7.registerEvents(new RenameListener(), this); //tangerine
         pm7.registerEvents(new JoinListener(), this); //tangerine
 
-        ScoreMarker.startloop();
+        if(getConfig().getBoolean("scoreTracker")) {
+            ScoreMarker.startloop();
+            Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::autosave, 0L, 1200L);
+        }
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::autosave, 0L, 1200L);
     }
 
     @Override
@@ -39,7 +41,9 @@ public final class Tangerine extends JavaPlugin {
             sm.kill();
         }
 
-        autosave();
+        if(getConfig().getBoolean("scoreTracker")) {
+            autosave();
+        }
     }
 
     // this was going to do more at some point I think :/

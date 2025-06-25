@@ -16,20 +16,22 @@ public class ScoreMarker {
     private static final Tangerine plugin = Tangerine.getPlugin();
 
     private static List<ScoreMarker> markers;
-    public static void startloop() {Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-        if(markers == null) markers = new ArrayList<>();
+    public static void startloop() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+            if(markers == null) markers = new ArrayList<>();
 
-        for(int i=0; i<markers.size(); i++) {
-            if(markers.get(i).remove) {
-                markers.get(i).kill();
-                i--;
+            for(int i=0; i<markers.size(); i++) {
+                if(markers.get(i).remove) {
+                    markers.get(i).kill();
+                    i--;
+                }
             }
-        }
 
-        for(ScoreMarker sm : markers) {
-            sm.animate();
-        }
-    }, 0L, 1L);}
+            for(ScoreMarker sm : markers) {
+                sm.animate();
+            }
+        }, 0L, 1L);
+    }
 
     private final TextDisplay display;
     private int ticks;
