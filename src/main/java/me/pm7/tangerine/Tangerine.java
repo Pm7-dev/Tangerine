@@ -30,8 +30,12 @@ public final class Tangerine extends JavaPlugin {
         scores = new ArrayList<>();
         ConfigurationSection scoreSection = getScoreSection();
         for(String key : scoreSection.getKeys(true)) {
+            System.out.println(key);
             scores.add(new AbstractMap.SimpleEntry<>(key, scoreSection.getLong(key)));
         }
+
+        System.out.println("owo");
+        System.out.println(scores);
 
         PluginManager pm7 = getServer().getPluginManager();
 
@@ -70,7 +74,10 @@ public final class Tangerine extends JavaPlugin {
     private static List<Map.Entry<String, Long>> scores;
     public List<Map.Entry<String, Long>> getScores() {return scores;}
     public ConfigurationSection getScoreSection() {
-        return getConfig().createSection("tangerinePoints");
+        if(getConfig().getConfigurationSection("tangerinePoints") == null)
+            return getConfig().createSection("tangerinePoints");
+
+        return getConfig().getConfigurationSection("tangerinePoints");
     }
 
     public static Tangerine getPlugin() {return plugin;}

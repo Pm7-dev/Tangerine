@@ -22,7 +22,7 @@ public class Leaderboard implements CommandExecutor {
 
         List<Map.Entry<String, Long>> scores = organize();
 
-        TextComponent.Builder builder = Component.text();
+        TextComponent.Builder builder = Component.text().append(Component.newline());
 
         builder.append(Component.text("TANGERINE LEADERBOARD:").color(NamedTextColor.GOLD)).decorate(TextDecoration.BOLD);
         for(int i=0; i<5; i++) {
