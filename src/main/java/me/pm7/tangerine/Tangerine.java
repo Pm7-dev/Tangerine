@@ -28,6 +28,8 @@ public final class Tangerine extends JavaPlugin {
         pm7.registerEvents(new RenameListener(), this); //tangerine
         pm7.registerEvents(new JoinListener(), this); //tangerine
 
+        getCommand("tangerineleaderboard").setExecutor(new Leaderboard());
+
         if(getConfig().getBoolean("scoreTracker")) {
             ScoreMarker.startloop();
             Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::autosave, 0L, 1200L);

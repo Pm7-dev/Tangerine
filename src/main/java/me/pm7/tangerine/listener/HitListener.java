@@ -71,6 +71,7 @@ public class HitListener implements Listener {
             UUID shooterUUID = shooter.getUniqueId();
             long currentPoints = plugin.getScores().getLong(shooterUUID.toString());
             plugin.getScores().set(shooterUUID.toString(), currentPoints + 1);
+            plugin.saveConfig();
 
             // score "+1" thingy animation
             new ScoreMarker(shooter, hit.getLocation());
