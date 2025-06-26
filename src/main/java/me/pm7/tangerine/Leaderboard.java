@@ -24,7 +24,8 @@ public class Leaderboard implements CommandExecutor {
 
         TextComponent.Builder builder = Component.text().append(Component.newline());
 
-        builder.append(Component.text("TANGERINE LEADERBOARD:").color(NamedTextColor.GOLD)).decorate(TextDecoration.BOLD);
+        builder.append(Component.text("TANGERINE LEADERBOARD:").color(NamedTextColor.GOLD)).decoration(TextDecoration.BOLD, true)
+                .append(Component.text(""));
         for(int i=0; i<5; i++) {
             if(scores.size() > i) {
                 appendScore(builder, i, scores);
